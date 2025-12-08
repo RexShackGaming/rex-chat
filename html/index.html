@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REX Chat</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="chat-container" id="chatContainer">
+        <!-- Chat Header -->
+        <div class="chat-header">
+            <div class="header-title">REX Chat</div>
+            <div class="header-info">
+                <span id="chatTypeDisplay" class="chat-type-badge">LOCAL</span>
+                <button class="close-btn" id="closeBtn">&times;</button>
+            </div>
+        </div>
+
+        <!-- Chat Messages -->
+        <div class="chat-messages" id="chatMessages">
+            <div class="system-message">Chat system loaded. Start typing to send a message.</div>
+        </div>
+
+        <!-- Chat Type Selector -->
+        <div class="chat-type-selector">
+            <button class="chat-type-btn active" data-type="local" title="Local Chat (T)">
+                <span class="icon">💬</span>
+                <span class="label">Local</span>
+            </button>
+            <button class="chat-type-btn" data-type="shout" title="Shout">
+                <span class="icon">📢</span>
+                <span class="label">Shout</span>
+            </button>
+            <button class="chat-type-btn" data-type="ooc" title="Out of Character">
+                <span class="icon">🔵</span>
+                <span class="label">OOC</span>
+            </button>
+            <button class="chat-type-btn" data-type="job" title="Job Chat">
+                <span class="icon">💼</span>
+                <span class="label">Job</span>
+            </button>
+            <button class="chat-type-btn" data-type="admin" title="Admin Chat">
+                <span class="icon">⚙️</span>
+                <span class="label">Admin</span>
+            </button>
+        </div>
+
+        <!-- Chat Input Area -->
+        <div class="chat-input-area">
+            <div class="input-group">
+                <input 
+                    type="text" 
+                    id="chatInput" 
+                    class="chat-input" 
+                    placeholder="Type your message here..."
+                    maxlength="256"
+                    autocomplete="off"
+                >
+                <button class="send-btn" id="sendBtn">Send</button>
+            </div>
+            <div class="char-counter">
+                <span id="charCount">0</span>/256
+            </div>
+        </div>
+
+        <!-- Whisper Input (Hidden) -->
+        <div class="whisper-section" id="whisperSection" style="display: none;">
+            <div class="whisper-header">
+                <span>Whisper to: <strong id="whisperTarget">-</strong></span>
+                <button class="cancel-whisper" id="cancelWhisper">×</button>
+            </div>
+            <input 
+                type="text" 
+                id="whisperInput" 
+                class="whisper-input" 
+                placeholder="Type whisper message..."
+                maxlength="256"
+                autocomplete="off"
+            >
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

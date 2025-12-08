@@ -1,0 +1,18 @@
+{
+    "chat_invalid_syntax": "Invalid syntax",
+    "chat_no_message": "You must provide a message",
+    "chat_message_too_long": "Message is too long (max %s characters)",
+    "chat_rate_limit": "Please wait before sending another message",
+    "chat_player_not_found": "Player not found",
+    "chat_whisper_sent": "Whisper sent to %s: %s",
+    "chat_whisper_received": "%s whispers: %s",
+    "chat_admin_needed": "You need admin permissions for this command",
+    "chat_job_chat": "[%s] %s: %s",
+    "chat_system": "[SYSTEM] %s",
+    "chat_ooc_format": "[OOC] %s: %s",
+    "chat_admin_format": "[ADMIN] %s: %s",
+    "chat_shout_format": "%s shouts: %s",
+    "chat_whisper_format": "%s whispers: %s",
+    "chat_local_format": "%s: %s",
+    "chat_global_format": "%s (Global): %s"
+}
