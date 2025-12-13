@@ -14,7 +14,8 @@ shared_scripts {
 }
 
 server_scripts {
-    'server/server.lua'
+    'server/server.lua',
+    'server/versionchecker.lua'
 }
 
 client_scripts {
