@@ -255,6 +255,12 @@ RegisterNetEvent('rex-chat:executeCommand', function(command, args)
         end
     elseif command == 'id' then
         TriggerClientEvent('rex-chat:receiveCommand', source, 'System', 'Your Player ID: ' .. source)
+    elseif command == 'cash' then
+        local player = RSGCore.Functions.GetPlayer(source)
+        if player then
+            local cashAmount = player.PlayerData.money['cash']
+            TriggerClientEvent('rex-chat:receiveCommand', source, 'System', 'You have: $' .. cashAmount)
+        end
     else
         -- Add more custom commands here as needed
         TriggerClientEvent('ox_lib:notify', source, { title = 'Chat', description = 'Command not implemented yet', type = 'error' })

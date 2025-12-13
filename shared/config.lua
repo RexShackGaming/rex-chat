@@ -42,7 +42,8 @@ Config = {
     
     -- Command whitelist for chat command execution
     Whitelist = {
-        id  = true,
-        cid = true,
+        id   = true,
+        cid  = true,
+        cash = true,
     },
 }

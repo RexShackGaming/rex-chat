@@ -3,9 +3,9 @@ rdr3_warning 'I acknowledge that this is a prerelease build of RedM, and I am aw
 game 'rdr3'
 
 name 'rex-chat'
-author 'RexShackGaming'
+author 'RexShack'
 description 'Chat system for RSG Framework'
-version '2.0.0'
+version '2.0.1'
 url 'https://discord.gg/YUV7ebzkqs'
 
 shared_scripts {
