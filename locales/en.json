@@ -14,5 +14,15 @@
     "chat_shout_format": "%s shouts: %s",
     "chat_whisper_format": "%s whispers: %s",
     "chat_local_format": "%s: %s",
-    "chat_global_format": "%s (Global): %s"
+    "chat_global_format": "%s (Global): %s",
+    "chat_title": "Chat",
+    "chat_sv_system": "System",
+    "chat_sv_command_not_found": "Command not found",
+    "chat_sv_citizen_id": "Citizen ID: ",
+    "chat_sv_player_id": "Your Player ID: ",
+    "chat_sv_player_cash": "You have: $",
+    "chat_sv_no_command": "Command not implemented yet",
+    "chat_cl_wisper_to": "Whisper to ",
+    "chat_cl_wispers": " whispers",
+    "chat_cl_shouts": " shouts"
 }

@@ -39,16 +39,16 @@ RegisterNetEvent('rex-chat:receiveWhisper', function(otherName, message, directi
     AddToHistory(otherName, message, 'whisper')
     
     if direction == 'sent' then
-        PrintChatMessage('Whisper to ' .. otherName, message, Config.ChatColors.Whisper)
+        PrintChatMessage(locale('chat_cl_wisper_to') .. otherName, message, Config.ChatColors.Whisper)
     else
-        PrintChatMessage(otherName .. ' whispers', message, Config.ChatColors.Whisper)
+        PrintChatMessage(otherName .. locale('chat_cl_wispers'), message, Config.ChatColors.Whisper)
     end
 end)
 
 -- Shout receive
 RegisterNetEvent('rex-chat:receiveShout', function(playerName, message)
     AddToHistory(playerName, message, 'shout')
-    PrintChatMessage(playerName .. ' shouts', message, Config.ChatColors.Shout)
+    PrintChatMessage(playerName .. locale('chat_cl_shouts'), message, Config.ChatColors.Shout)
 end)
 
 -- OOC receive

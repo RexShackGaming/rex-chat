@@ -89,12 +89,12 @@ end
 RegisterNetEvent('rex-chat:local', function(message)
     local source = source
     if IsOnCooldown(source) then
-        TriggerClientEvent('ox_lib:notify', source, { title = 'Chat', description = locale('chat_rate_limit'), type = 'error' })
+        TriggerClientEvent('ox_lib:notify', source, { title = locale('chat_title'), description = locale('chat_rate_limit'), type = 'error' })
         return
     end
     
     if #message < Config.MinMessageLength or #message > Config.MaxMessageLength then
-        TriggerClientEvent('ox_lib:notify', source, { title = 'Chat', description = locale('chat_no_message'), type = 'error' })
+        TriggerClientEvent('ox_lib:notify', source, { title = locale('chat_title'), description = locale('chat_no_message'), type = 'error' })
         return
     end
     
@@ -113,18 +113,18 @@ end)
 RegisterNetEvent('rex-chat:whisper', function(targetId, message)
     local source = source
     if IsOnCooldown(source) then
-        TriggerClientEvent('ox_lib:notify', source, { title = 'Chat', description = locale('chat_rate_limit'), type = 'error' })
+        TriggerClientEvent('ox_lib:notify', source, { title = locale('chat_title'), description = locale('chat_rate_limit'), type = 'error' })
         return
     end
     
     if #message < Config.MinMessageLength or #message > Config.MaxMessageLength then
-        TriggerClientEvent('ox_lib:notify', source, { title = 'Chat', description = locale('chat_no_message'), type = 'error' })
+        TriggerClientEvent('ox_lib:notify', source, { title = locale('chat_title'), description = locale('chat_no_message'), type = 'error' })
         return
     end
     
     local targetPlayer = RSGCore.Functions.GetPlayer(tonumber(targetId))
     if not targetPlayer then
-        TriggerClientEvent('ox_lib:notify', source, { title = 'Chat', description = locale('chat_player_not_found'), type = 'error' })
+        TriggerClientEvent('ox_lib:notify', source, { title = locale('chat_title'), description = locale('chat_player_not_found'), type = 'error' })
         return
     end
     
@@ -142,12 +142,12 @@ end)
 RegisterNetEvent('rex-chat:shout', function(message)
     local source = source
     if IsOnCooldown(source) then
-        TriggerClientEvent('ox_lib:notify', source, { title = 'Chat', description = locale('chat_rate_limit'), type = 'error' })
+        TriggerClientEvent('ox_lib:notify', source, { title = locale('chat_title'), description = locale('chat_rate_limit'), type = 'error' })
         return
     end
     
     if #message < Config.MinMessageLength or #message > Config.MaxMessageLength then
-        TriggerClientEvent('ox_lib:notify', source, { title = 'Chat', description = locale('chat_no_message'), type = 'error' })
+        TriggerClientEvent('ox_lib:notify', source, { title = locale('chat_title'), description = locale('chat_no_message'), type = 'error' })
         return
     end
     
@@ -166,12 +166,12 @@ end)
 RegisterNetEvent('rex-chat:ooc', function(message)
     local source = source
     if IsOnCooldown(source) then
-        TriggerClientEvent('ox_lib:notify', source, { title = 'Chat', description = locale('chat_rate_limit'), type = 'error' })
+        TriggerClientEvent('ox_lib:notify', source, { title = locale('chat_title'), description = locale('chat_rate_limit'), type = 'error' })
         return
     end
     
     if #message < Config.MinMessageLength or #message > Config.MaxMessageLength then
-        TriggerClientEvent('ox_lib:notify', source, { title = 'Chat', description = locale('chat_no_message'), type = 'error' })
+        TriggerClientEvent('ox_lib:notify', source, { title = locale('chat_title'), description = locale('chat_no_message'), type = 'error' })
         return
     end
     
@@ -187,12 +187,12 @@ end)
 RegisterNetEvent('rex-chat:job', function(message)
     local source = source
     if IsOnCooldown(source) then
-        TriggerClientEvent('ox_lib:notify', source, { title = 'Chat', description = locale('chat_rate_limit'), type = 'error' })
+        TriggerClientEvent('ox_lib:notify', source, { title = locale('chat_title'), description = locale('chat_rate_limit'), type = 'error' })
         return
     end
     
     if #message < Config.MinMessageLength or #message > Config.MaxMessageLength then
-        TriggerClientEvent('ox_lib:notify', source, { title = 'Chat', description = locale('chat_no_message'), type = 'error' })
+        TriggerClientEvent('ox_lib:notify', source, { title = locale('chat_title'), description = locale('chat_no_message'), type = 'error' })
         return
     end
     
@@ -212,17 +212,17 @@ end)
 RegisterNetEvent('rex-chat:admin', function(message)
     local source = source
     if not IsPlayerAdmin(source) then
-        TriggerClientEvent('ox_lib:notify', source, { title = 'Chat', description = locale('chat_admin_needed'), type = 'error' })
+        TriggerClientEvent('ox_lib:notify', source, { title = locale('chat_title'), description = locale('chat_admin_needed'), type = 'error' })
         return
     end
     
     if IsOnCooldown(source) then
-        TriggerClientEvent('ox_lib:notify', source, { title = 'Chat', description = locale('chat_rate_limit'), type = 'error' })
+        TriggerClientEvent('ox_lib:notify', source, { title = locale('chat_title'), description = locale('chat_rate_limit'), type = 'error' })
         return
     end
     
     if #message < Config.MinMessageLength or #message > Config.MaxMessageLength then
-        TriggerClientEvent('ox_lib:notify', source, { title = 'Chat', description = locale('chat_no_message'), type = 'error' })
+        TriggerClientEvent('ox_lib:notify', source, { title = locale('chat_title'), description = locale('chat_no_message'), type = 'error' })
         return
     end
     
@@ -242,7 +242,7 @@ RegisterNetEvent('rex-chat:executeCommand', function(command, args)
     
     -- Check if command is whitelisted
     if not Config.Whitelist[command] then
-        TriggerClientEvent('rex-chat:receiveCommand', source, 'System', 'Command not found', 'error')
+        TriggerClientEvent('rex-chat:receiveCommand', source, locale('chat_sv_system'), locale('chat_sv_command_not_found'), 'error')
         return
     end
     
@@ -251,19 +251,19 @@ RegisterNetEvent('rex-chat:executeCommand', function(command, args)
         local player = RSGCore.Functions.GetPlayer(source)
         if player then
             local citizenId = player.PlayerData.citizenid
-            TriggerClientEvent('rex-chat:receiveCommand', source, 'System', 'Citizen ID: ' .. citizenId)
+            TriggerClientEvent('rex-chat:receiveCommand', source, locale('chat_sv_system'), locale('chat_sv_citizen_id') .. citizenId)
         end
     elseif command == 'id' then
-        TriggerClientEvent('rex-chat:receiveCommand', source, 'System', 'Your Player ID: ' .. source)
+        TriggerClientEvent('rex-chat:receiveCommand', source, locale('chat_sv_system'), locale('chat_sv_player_id') .. source)
     elseif command == 'cash' then
         local player = RSGCore.Functions.GetPlayer(source)
         if player then
             local cashAmount = player.PlayerData.money['cash']
-            TriggerClientEvent('rex-chat:receiveCommand', source, 'System', 'You have: $' .. cashAmount)
+            TriggerClientEvent('rex-chat:receiveCommand', source, locale('chat_sv_system'), locale('chat_sv_player_cash') .. cashAmount)
         end
     else
         -- Add more custom commands here as needed
-        TriggerClientEvent('ox_lib:notify', source, { title = 'Chat', description = 'Command not implemented yet', type = 'error' })
+        TriggerClientEvent('ox_lib:notify', source, { title = locale('chat_title'), description = locale('chat_sv_no_command'), type = 'error' })
     end
 end)
 
