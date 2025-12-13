@@ -14,8 +14,8 @@ html, body {
 
 .chat-container {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
+    left: 20px;
+    top: 20px;
     width: 500px;
     height: 600px;
     background: rgb(10, 10, 14) !important;
@@ -51,6 +51,12 @@ html, body {
     border-radius: 10px 10px 0 0;
     backdrop-filter: blur(6px);
     opacity: 1 !important;
+    cursor: grab;
+    user-select: none;
+}
+
+.chat-header:active {
+    cursor: grabbing;
 }
 
 .header-title {

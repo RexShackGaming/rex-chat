@@ -9,6 +9,7 @@ class ChatUI {
         this.chatTypeDisplay = document.getElementById('chatTypeDisplay');
         this.charCount = document.getElementById('charCount');
         this.charCounter = document.querySelector('.char-counter');
+        this.dragHandle = document.getElementById('dragHandle');
         
         // Whisper elements
         this.whisperSection = document.getElementById('whisperSection');
@@ -22,12 +23,20 @@ class ChatUI {
         this.whisperTargetId = null;
         this.whisperTargetName = null;
         
+        // Drag state
+        this.isDragging = false;
+        this.dragStartX = 0;
+        this.dragStartY = 0;
+        this.dragStartLeft = 0;
+        this.dragStartTop = 0;
+        
         this.init();
     }
 
     init() {
         this.setupEventListeners();
         this.loadChatHistory();
+        this.loadPosition();
     }
 
     setupEventListeners() {
@@ -61,6 +70,11 @@ class ChatUI {
 
         // Close button
         this.closeBtn.addEventListener('click', () => this.close());
+
+        // Drag handlers
+        this.dragHandle.addEventListener('mousedown', (e) => this.onDragStart(e));
+        document.addEventListener('mousemove', (e) => this.onDragMove(e));
+        document.addEventListener('mouseup', (e) => this.onDragEnd(e));
 
         // Character counter
         this.chatInput.addEventListener('input', () => {
@@ -272,6 +286,72 @@ class ChatUI {
                 'Content-Type': 'application/json',
             }
         });
+    }
+
+    loadPosition() {
+        const savedPosition = localStorage.getItem('chatPosition');
+        if (savedPosition) {
+            try {
+                const pos = JSON.parse(savedPosition);
+                this.container.style.left = pos.left + 'px';
+                this.container.style.top = pos.top + 'px';
+            } catch (e) {
+                console.error('Failed to load chat position:', e);
+            }
+        }
+    }
+
+    savePosition() {
+        const rect = this.container.getBoundingClientRect();
+        const position = {
+            left: this.container.offsetLeft,
+            top: this.container.offsetTop
+        };
+        localStorage.setItem('chatPosition', JSON.stringify(position));
+    }
+
+    onDragStart(e) {
+        // Only drag from header area, not from buttons
+        if (e.target.closest('button')) return;
+        
+        this.isDragging = true;
+        this.dragStartX = e.clientX;
+        this.dragStartY = e.clientY;
+        this.dragStartLeft = this.container.offsetLeft;
+        this.dragStartTop = this.container.offsetTop;
+        
+        this.container.style.cursor = 'grabbing';
+        this.dragHandle.style.userSelect = 'none';
+    }
+
+    onDragMove(e) {
+        if (!this.isDragging) return;
+        
+        const deltaX = e.clientX - this.dragStartX;
+        const deltaY = e.clientY - this.dragStartY;
+        
+        const newLeft = this.dragStartLeft + deltaX;
+        const newTop = this.dragStartTop + deltaY;
+        
+        // Keep within viewport bounds
+        const maxLeft = window.innerWidth - this.container.offsetWidth;
+        const maxTop = window.innerHeight - this.container.offsetHeight;
+        
+        const finalLeft = Math.max(0, Math.min(newLeft, maxLeft));
+        const finalTop = Math.max(0, Math.min(newTop, maxTop));
+        
+        this.container.style.left = finalLeft + 'px';
+        this.container.style.top = finalTop + 'px';
+    }
+
+    onDragEnd(e) {
+        if (!this.isDragging) return;
+        
+        this.isDragging = false;
+        this.container.style.cursor = 'default';
+        this.dragHandle.style.userSelect = 'auto';
+        
+        this.savePosition();
     }
 }
 
