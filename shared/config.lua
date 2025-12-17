@@ -9,15 +9,14 @@ Config = {
     MinMessageLength = 1,
     RateLimit = 1000, -- Milliseconds between messages
     
-    -- Chat commands
+    -- Chat commands (slash commands are routed to external message system)
     Commands = {
-        Global = { Prefix = '/', Enabled = true, RequireJob = false },
-        Local = { Prefix = 'NONE', Enabled = true, RequireJob = false },
-        Whisper = { Prefix = '/w', Enabled = true, RequireJob = false },
-        Shout = { Prefix = '/s', Enabled = true, RequireJob = false },
-        OOC = { Prefix = '/ooc', Enabled = true, RequireJob = false },
-        Job = { Prefix = '/job', Enabled = true, RequireJob = true },
-        Admin = { Prefix = '/a', Enabled = true, RequireJob = false, RequireAdmin = true },
+        Local = { Enabled = true, RequireJob = false },
+        Whisper = { Enabled = true, RequireJob = false },
+        Shout = { Enabled = true, RequireJob = false },
+        OOC = { Enabled = true, RequireJob = false },
+        Job = { Enabled = true, RequireJob = true },
+        Admin = { Enabled = true, RequireJob = false, RequireAdmin = true },
     },
     
     -- Chat colors (RGB)

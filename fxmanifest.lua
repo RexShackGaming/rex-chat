@@ -4,8 +4,8 @@ game 'rdr3'
 
 name 'rex-chat'
 author 'RexShack'
-description 'Chat system for RSG Framework'
-version '2.0.3'
+description 'REX chat system for RSG Framework'
+version '2.0.4'
 url 'https://discord.gg/YUV7ebzkqs'
 
 shared_scripts {

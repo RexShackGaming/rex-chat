@@ -236,36 +236,8 @@ RegisterNetEvent('rex-chat:admin', function(message)
     end
 end)
 
--- Execute whitelisted commands
-RegisterNetEvent('rex-chat:executeCommand', function(command, args)
-    local source = source
-    
-    -- Check if command is whitelisted
-    if not Config.Whitelist[command] then
-        TriggerClientEvent('rex-chat:receiveCommand', source, locale('chat_sv_system'), locale('chat_sv_command_not_found'), 'error')
-        return
-    end
-    
-    -- Execute specific commands
-    if command == 'cid' then
-        local player = RSGCore.Functions.GetPlayer(source)
-        if player then
-            local citizenId = player.PlayerData.citizenid
-            TriggerClientEvent('rex-chat:receiveCommand', source, locale('chat_sv_system'), locale('chat_sv_citizen_id') .. citizenId)
-        end
-    elseif command == 'id' then
-        TriggerClientEvent('rex-chat:receiveCommand', source, locale('chat_sv_system'), locale('chat_sv_player_id') .. source)
-    elseif command == 'cash' then
-        local player = RSGCore.Functions.GetPlayer(source)
-        if player then
-            local cashAmount = player.PlayerData.money['cash']
-            TriggerClientEvent('rex-chat:receiveCommand', source, locale('chat_sv_system'), locale('chat_sv_player_cash') .. cashAmount)
-        end
-    else
-        -- Add more custom commands here as needed
-        TriggerClientEvent('ox_lib:notify', source, { title = locale('chat_title'), description = locale('chat_sv_no_command'), type = 'error' })
-    end
-end)
+-- Commands are now handled via external message system (ExecuteCommand)
+-- No internal command processing in this resource
 
 -- Clean up cooldown on disconnect
 AddEventHandler('playerDropped', function()

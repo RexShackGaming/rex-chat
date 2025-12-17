@@ -72,6 +72,14 @@ RegisterNUICallback('sendMessage', function(data, cb)
         return
     end
     
+    -- Handle slash commands - route to external message system
+    if message:sub(1, 1) == '/' then
+        ExecuteCommand(message:sub(2)) -- Remove the / prefix and pass to native command handler
+        CloseChatUI() -- Close the NUI interface after executing command
+        cb({ success = true })
+        return
+    end
+    
     if string.len(message) > Config.MaxMessageLength then
         SendNUIMessage({
             type = 'chat:system',
@@ -81,77 +89,28 @@ RegisterNUICallback('sendMessage', function(data, cb)
         return
     end
     
-    -- Handle slash commands in message
-    if message:sub(1, 1) == '/' then
-        local parts = {}
-        for word in message:gmatch('%S+') do
-            table.insert(parts, word)
-        end
-        
-        local command = parts[1]:lower():sub(2) -- Remove the / prefix
-        table.remove(parts, 1)
-        local msgContent = table.concat(parts, ' ')
-        
-        -- Check if this is a whitelisted command
-        local isWhitelisted = Config.Whitelist[command] == true
-        
-        if isWhitelisted then
-            TriggerServerEvent('rex-chat:executeCommand', command, msgContent)
-            cb({ success = true })
-            return
-        end
-        
-        -- Route to appropriate chat type commands
-        if command == 's' or command == 'shout' then
-            TriggerServerEvent('rex-chat:shout', msgContent)
-        elseif command == 'ooc' then
-            TriggerServerEvent('rex-chat:ooc', msgContent)
-        elseif command == 'job' then
-            TriggerServerEvent('rex-chat:job', msgContent)
-        elseif command == 'a' or command == 'admin' then
-            TriggerServerEvent('rex-chat:admin', msgContent)
-        elseif command == 'w' or command == 'whisper' then
-            local targetId = tonumber(parts[1])
-            if targetId and #parts > 1 then
-                table.remove(parts, 1)
-                local whisperMsg = table.concat(parts, ' ')
-                TriggerServerEvent('rex-chat:whisper', targetId, whisperMsg)
-            else
-                SendNUIMessage({
-                    type = 'chat:system',
-                    message = 'Usage: /w <player_id> <message>'
-                })
-                cb({ success = false, error = 'Invalid whisper command' })
-                return
-            end
+    -- Send based on selected chat type
+    if chatType == 'local' then
+        TriggerServerEvent('rex-chat:local', message)
+    elseif chatType == 'shout' then
+        TriggerServerEvent('rex-chat:shout', message)
+    elseif chatType == 'ooc' then
+        TriggerServerEvent('rex-chat:ooc', message)
+    elseif chatType == 'job' then
+        TriggerServerEvent('rex-chat:job', message)
+    elseif chatType == 'admin' then
+        TriggerServerEvent('rex-chat:admin', message)
+    elseif chatType == 'whisper' then
+        local targetId = tonumber(data.targetId)
+        if targetId then
+            TriggerServerEvent('rex-chat:whisper', targetId, message)
         else
-            -- Unknown command, send as local chat
-            TriggerServerEvent('rex-chat:local', message)
+            cb({ success = false, error = 'Invalid whisper target' })
+            return
         end
     else
-        -- No slash command, send based on selected chat type
-        if chatType == 'local' then
-            TriggerServerEvent('rex-chat:local', message)
-        elseif chatType == 'shout' then
-            TriggerServerEvent('rex-chat:shout', message)
-        elseif chatType == 'ooc' then
-            TriggerServerEvent('rex-chat:ooc', message)
-        elseif chatType == 'job' then
-            TriggerServerEvent('rex-chat:job', message)
-        elseif chatType == 'admin' then
-            TriggerServerEvent('rex-chat:admin', message)
-        elseif chatType == 'whisper' then
-            local targetId = tonumber(data.targetId)
-            if targetId then
-                TriggerServerEvent('rex-chat:whisper', targetId, message)
-            else
-                cb({ success = false, error = 'Invalid whisper target' })
-                return
-            end
-        else
-            cb({ success = false, error = 'Invalid chat type' })
-            return
-        end
+        cb({ success = false, error = 'Invalid chat type' })
+        return
     end
     
     cb({ success = true })
